@@ -1,0 +1,36 @@
+graph.get_object('lacta/posts?fields=created_time,type&limit=100')  ///get type per post since date
+
+
+graph.get_object('lacta/posts?fields=likes.summary(true).limit(0),comments.summary(true).limit(0),insights&limit=100')
+///get count of comments,likes per post id
+a=posts[i]['id'] //get individual post id
+b=graph.get_object(posts[i]['id']+'?fields=likes.summary(true).limit(0),comments.summary(true).limit(0),insights&limit=100')
+z={**a,**b} merge them
+s['new_key'] =s['total_count']  *** change dict key names
+
+
+
+
+graph.get_object('lacta/posts?fields=shares') ///get shares per post id
+
+
+graph.get_object('lacta/posts?fields=comments{like_count,message,created_time}') ///likes per comment and comment message
+
+
+
+graph.get_object('lacta/?fields=fan_count&limit=100')  ///get total page likes
+
+
+
+
+graph.get_object('lacta/?fields=company_overview,category,founded,location,phone,cover')
+///get company's info and photo
+
+
+
+graph.get_object('lacta/insights')  ///get page likes per countr,storytellers per country lifetime, month
+
+
+
+lacta?fields=events{attending_count,interested_count,noreply_count,declined_count,name} //events
+

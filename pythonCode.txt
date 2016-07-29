@@ -1,0 +1,60 @@
+posts=graph.get_object(posts[0]['id']+'?fields=likes.summary(true).limit(0),comments.summary(true).limit(0),insights&limit=100')
+
+data={}
+shares={}
+
+posts=graph.get_object('lacta/posts?fields=created_time,type&limit=100')['data']
+
+for i in range(0,101):
+	posts[i]['p_id']=posts[i]['id']
+	del posts[i]['id']
+	likes=graph.get_object(posts[i]['p_id']+'?fields=likes.summary(true).limit(0),comments.summary(true).limit(0),insights&limit=100')['likes']['summary']
+	likes['likes_count']=likes['total_count']
+	del likes['total_count']
+	comments=graph.get_object(posts[i]['p_id']+'?fields=likes.summary(true).limit(0),comments.summary(true).limit(0),insights&limit=100')['comments']['summary']
+	comments['comments_count']=comments['total_count']
+	del comments['total_count']
+	with suppress(Exception): # or, better, a more specific error (or errors)
+    		shares=graph.get_object(posts[i]['p_id']+'?fields=shares')['shares']
+	if 'count' not in shares.keys(): shares['count']=0
+	shares['shares_count']=shares['count']
+	del shares['count']
+	data[i]={**posts[i],**likes,**comments,**shares}
+link=0
+video=0
+photo=0
+status=0
+offer=0
+for i in range(0,99):
+	if data[i]['type']=='photo':
+		photo=photo+1
+	elif data[i]['type']=='video':
+		video=video+1
+	elif data[i]['type']=='link':
+		link=link+1
+	elif data[i]['status']=='status':
+		status=status+1
+	elif data[i]['offer']=='offer':
+		offer=offer+1
+
+
+
+from collections import defaultdict
+
+words = "apple banana apple strawberry banana lemon"
+d = defaultdict(int)
+for word in words.split():
+    d[word] += 1
+
+
+import operator
+
+sorted_x = sorted(d.items(), key=operator.itemgetter(1))
+
+
+sorted_x[-1][0] etc
+
+
+
+
+er=graph.get_object('23562482184_10153163705727185?fields=comments{message}')
